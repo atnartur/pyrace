@@ -1,4 +1,5 @@
 import pygame, time
+from core.key_bindings import KeyBindings
 
 class Loop:
     def __init__(self, screen, objects):
@@ -32,6 +33,9 @@ class Loop:
             pygame.display.flip()
 
             pygame.event.pump()
-    
+            KeyBindings.exec(pygame.key.get_pressed())
+
+        pygame.display.quit()
+
     def stop(self):
         self.is_go = False
