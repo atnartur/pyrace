@@ -19,12 +19,13 @@ class Loop:
                 t = time.time()
                 frames = 0
 
+            self.screen.fill((0, 0, 0))
+
             for object in self.objects:
                 object.update(self.screen)
 
             frames += 1
             self.screen.lock()
-            self.screen.fill((0, 0, 0))
 
             for object in self.objects:
                 object.render(self.screen)
