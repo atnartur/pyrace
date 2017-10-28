@@ -21,16 +21,14 @@ class Loop:
 
             self.screen.fill((0, 0, 0))
 
-            for object in self.objects:
-                object.update(self.screen)
+            [o.update(self.screen) for o in self.objects]
 
             frames += 1
+
             self.screen.lock()
-
-            for object in self.objects:
-                object.render(self.screen)
-
+            [o.render(self.screen) for o in self.objects]
             self.screen.unlock()
+
             pygame.display.flip()
 
             pygame.event.pump()

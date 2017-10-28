@@ -1,12 +1,5 @@
 import pygame
 
-pygame.display.init()
-pygame.display.set_caption('PyRace')
-
-width = 800
-height = 600
-screen = pygame.display.set_mode((width, height))
-
 objects = []
 
 if __name__ == '__main__':
@@ -14,10 +7,21 @@ if __name__ == '__main__':
     from core.key_bindings import KeyBindings
     from objects.car import Car
     from objects.walls import Walls
+    from objects.menu import Menu
 
-    objects.append(Car(width / 2 - 100, height / 2))
-    objects.append(Car(width / 2 + 100, height / 2, Car.COLOR__RED))
-    objects.append(Walls((width, height - 50)))
+    pygame.display.init()
+    pygame.display.set_caption('PyRace')
+
+    width = 800
+    height = 600
+    screen = pygame.display.set_mode((width, height))
+
+    pygame.font.init()
+
+    # objects.append(Car(width / 2 - 100, height / 2))
+    # objects.append(Car(width / 2 + 100, height / 2, Car.COLOR__RED))
+    # objects.append(Walls((width, height - 50)))
+    objects.append(Menu(screen))
 
     loop = Loop(screen, objects)
 
