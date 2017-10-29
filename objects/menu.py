@@ -4,6 +4,7 @@ from objects.car import Car
 from objects.text import Text
 from objects.simple import Simple
 from settings import colors
+from core.key_bindings import KeyBindings
 
 class Menu(Base):
 
@@ -25,7 +26,7 @@ class Menu(Base):
             pass
 
 
-    def __init__(self, screen):
+    def __init__(self, screen, game):
         w, h = screen.get_size()
 
         first_line = 100
@@ -33,17 +34,23 @@ class Menu(Base):
             Car(w / 2 - 100, first_line),
             Text("PyGame", offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
 
-            Menu.Button("Начать игру", (w / 2, 300)),
+            Menu.Button("Нажмите ПРОБЕЛ, чтобы начать игру", (w / 2, 300)),
 
             Text("Горячие клавиши", offset=(w / 2, 450), size=20, type=Text.TYPE__BOLD),
             Text("Q, Esc - выход", offset=(w / 2, 480), size=20),
-            Text("Enter - начать игру", offset=(w / 2, 500), size=20),
 
             Simple(lambda screen: draw.line(screen, colors['blue'], (0, 560), (screen.get_size()[0], 560), 2)),
 
             Text("© 2017 Булат Гиниятуллин, Артур Атнагулов", offset=(w / 2, 580), size=17),
         ]
-        pass
+
+        def start():
+            print('start')
+            self.objects = []
+            KeyBindings.deregister(K_SPACE)
+            game.start()
+
+        KeyBindings.register(K_SPACE, start)
 
     def update(self, screen):
         [o.update(screen) for o in self.objects]

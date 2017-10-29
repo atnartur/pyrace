@@ -3,8 +3,13 @@ class KeyBindings:
 
     @staticmethod
     def register(key, value):
-        dir(KeyBindings)
         KeyBindings.__bindings[key] = value
+
+    @staticmethod
+    def deregister(key):
+        newDict = KeyBindings.__bindings.copy()
+        del newDict[key]
+        KeyBindings.__bindings = newDict
 
     @staticmethod
     def exec(keys):
