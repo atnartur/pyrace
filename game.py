@@ -7,5 +7,6 @@ class Game:
         self.objects = objects
 
     def start(self):
-        self.objects.append(Car(width / 2, height - 60))
-        self.objects.append(Walls((width, height - 50)))
+        car = Car(width / 2, height - 60)
+        self.objects.append(car)
+        self.objects.append(Walls((width, height), margin=1.5 * car.img.get_height()))
