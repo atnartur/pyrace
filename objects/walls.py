@@ -12,8 +12,8 @@ class Walls(Base):
         self.cube_size = cube_size
         self.margin = margin
         self.offset = offset
-        self.min_wall_width = int(size[0] / 4)  # минимальная ширина стены
-        self.max_wall_width = 3 * int(size[0] / 4)  # максимальная ширина стены
+        self.min_wall_width = int(size[0]/cube_size / 4)  # минимальная ширина стены
+        self.max_wall_width = 3 * int(size[0]/cube_size / 4)  # максимальная ширина стены
         self.generate()
 
     def generate(self):
