@@ -17,6 +17,11 @@ class Walls(Base):
         self.top_margin = 50
         self.generate()
 
+    def generate_wall(self, top_margin):
+        direction = randint(0, 1) == 0
+        width = randint(self.min_wall_width, self.max_wall_width)
+        self.coordinates.append((top_margin, width * self.cube_size, direction))
+
     def generate(self):
         w, h = self.size
 
@@ -25,9 +30,7 @@ class Walls(Base):
 
         y = self.top_margin / self.cube_size
         while y <= h - 2 * self.margin/self.cube_size:
-            direction = randint(0, 1) == 0
-            width = randint(self.min_wall_width, self.max_wall_width)
-            self.coordinates.append((y*self.cube_size, width*self.cube_size, direction))
+            self.generate_wall(y * self.cube_size)
             y += self.margin/self.cube_size
 
     def update(self, screen):
@@ -35,11 +38,12 @@ class Walls(Base):
         for i in range(len(self.coordinates)):
             y, width, direction = self.coordinates[i]
             self.coordinates[i] = (y + 1, width, direction)
+
         if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin:
-            width = randint(self.min_wall_width, self.max_wall_width)
-            direction = randint(0, 1) == 0
-            self.coordinates.append((self.top_margin, width*self.cube_size, direction))
+            self.generate_wall(self.top_margin)
+
         last_wall = max(self.coordinates, key=lambda x: x[0])
+
         if last_wall[0] >= h:
             self.coordinates.remove(last_wall)
 
