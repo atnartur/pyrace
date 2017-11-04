@@ -51,5 +51,4 @@ class Walls(Base):
                 x = offset_x
             else:
                 x = offset_x + w - width
-            draw.rect(screen, self.color,
-                      (x, offset_y + y, width, self.cube_size))
+            draw.rect(screen, self.color, (x, offset_y + y, width, self.cube_size))

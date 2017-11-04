@@ -4,6 +4,7 @@ from objects.base import Base
 class Text(Base):
     TYPE__BOLD = 'files/fonts/Roboto-Bold.ttf'
     TYPE__REGULAR = 'files/fonts/Roboto-Regular.ttf'
+    TYPE__DIGITAL = 'files/fonts/digital.ttf'
 
     def __init__(self, text, offset=(0, 0), color=(255, 255, 255), type=TYPE__REGULAR, size=20):
         self.text = text
@@ -13,7 +14,7 @@ class Text(Base):
 
     def update(self, screen):
         text = self.font.render(self.text, True, self.color)
-        # print(text.get_width(), text.get_height())
+        # print(self.text, text.get_width(), text.get_height())
 
         x, y = self.offset
         x -= text.get_width() / 2
