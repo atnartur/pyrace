@@ -10,7 +10,7 @@ if __name__ == '__main__':
     from objects.menu import Menu
 
     pygame.display.init()
-    pygame.display.set_caption('PyRace')
+    pygame.display.set_caption('PyGame')
 
     screen = pygame.display.set_mode((width, height))
 
