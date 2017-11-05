@@ -5,3 +5,5 @@ colors = {
 
 width = 800
 height = 600
+
+name = 'PyRace'

@@ -1,6 +1,6 @@
 from pygame import *
 from objects.base import Base
-from settings import colors
+from settings import colors, name
 from objects.text import Text
 
 class InfoPanel(Base):
@@ -15,7 +15,7 @@ class InfoPanel(Base):
         hotkey_second_line = hotkey_first_line + 17
 
         self.objects = [
-            Text('PyGame', offset=(self.header_x, 25), size=40, type=Text.TYPE__BOLD),
+            Text(name, offset=(self.header_x, 25), size=40, type=Text.TYPE__BOLD),
             Text('очков', offset=(self.score_x + 70, 25), size=30, type=Text.TYPE__BOLD),
             Text('<, >', offset=(hotkey_x, hotkey_first_line), size=15, type=Text.TYPE__BOLD),
             Text('перемещение машинки', offset=(hotkey_x + 120, hotkey_first_line), size=15),
