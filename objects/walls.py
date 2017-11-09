@@ -15,6 +15,7 @@ class Walls(Base):
         self.min_wall_width = int(size[0]/cube_size / 4)  # минимальная ширина стены
         self.max_wall_width = 3 * int(size[0]/cube_size / 4)  # максимальная ширина стены
         self.top_margin = 50
+        self.speed = 1
         self.generate()
 
     def generate(self):
@@ -34,7 +35,7 @@ class Walls(Base):
         w, h = self.size
         for i in range(len(self.coordinates)):
             y, width, direction = self.coordinates[i]
-            self.coordinates[i] = (y + 1, width, direction)
+            self.coordinates[i] = (y + self.speed, width, direction)
         if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin:
             width = randint(self.min_wall_width, self.max_wall_width)
             direction = randint(0, 1) == 0
