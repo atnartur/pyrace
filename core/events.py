@@ -1,5 +1,16 @@
+import time
+from enum import Enum
+
+
+class Direction(Enum):
+    STRAIGHT = 0
+    RIGHT = 1
+    LEFT = 2
+
+
 class Events:
     instance = None
+    acceleration_timeout = 2
 
     @staticmethod
     def get_instance(car, walls):
@@ -10,6 +21,7 @@ class Events:
     def __init__(self, car, walls):
         self.car = car
         self.walls = walls
+        self.acceleration_coefficient = 1
 
     def is_collision(self):
         screen_w = self.walls.size[0]
@@ -35,7 +47,12 @@ class Events:
         return collision
 
     def shift_left(self):
-        self.car.x -= 1
+        self.car.direction = Direction.LEFT
 
     def shift_right(self):
-        self.car.x += 1
+        self.car.direction = Direction.RIGHT
+
+    def accelerate(self, k):
+        self.acceleration_coefficient = k
+        self.walls.is_accelerated = True
+        self.car.is_accelerated = True

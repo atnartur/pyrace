@@ -6,6 +6,7 @@ from objects.walls import Walls
 from settings import *
 from core.events import Events
 
+
 class Game:
     def __init__(self, objects):
         self.objects = objects
@@ -19,3 +20,4 @@ class Game:
 
         KeyBindings.register(pygame.K_LEFT, Events.instance.shift_left)
         KeyBindings.register(pygame.K_RIGHT, Events.instance.shift_right)
+        KeyBindings.register(pygame.K_UP, lambda: Events.instance.accelerate(2))
