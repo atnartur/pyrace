@@ -34,15 +34,12 @@ class Events:
             in_height = False
             if car_y - car_h/2 <= y <= car_y + car_h/2:
                 in_height = True
-            else:
-                continue
             if direction and (car_x - car_w/2 <= width):
                 in_width = True
             elif not direction and (car_x + car_w/2 >= screen_w - width):
                 in_width = True
-            else:
-                continue
             collision = in_height and in_width
+            i += 1
         return collision
 
     def shift_left(self):

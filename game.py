@@ -26,4 +26,5 @@ class Game:
         KeyBindings.register(pygame.K_TAB, lambda: Events.instance.accelerate_car(2))
 
     def provider_handler(self, screen):
-        print('I\'m a game provider!')
+        if Events.instance.is_collision():
+            print("BUMP!")
