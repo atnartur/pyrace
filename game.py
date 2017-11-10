@@ -23,6 +23,7 @@ class Game:
         KeyBindings.register(pygame.K_RIGHT, Events.instance.shift_right)
         KeyBindings.register(pygame.K_UP, lambda: Events.instance.accelerate(2))
         providers.append(self.provider_handler)
+        KeyBindings.register(pygame.K_TAB, lambda: Events.instance.accelerate_car(2))
 
     def provider_handler(self, screen):
         print('I\'m a game provider!')

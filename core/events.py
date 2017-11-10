@@ -1,4 +1,3 @@
-import time
 from enum import Enum
 
 
@@ -10,7 +9,7 @@ class Direction(Enum):
 
 class Events:
     instance = None
-    acceleration_timeout = 2
+    acceleration_timeout = 1
 
     @staticmethod
     def get_instance(car, walls):
@@ -53,6 +52,9 @@ class Events:
         self.car.direction = Direction.RIGHT
 
     def accelerate(self, k):
-        self.acceleration_coefficient = k
+        self.walls.acceleration_coefficient = k
         self.walls.is_accelerated = True
+
+    def accelerate_car(self, k):
+        self.car.acceleration_coefficient = k
         self.car.is_accelerated = True
