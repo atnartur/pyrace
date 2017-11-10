@@ -31,10 +31,7 @@ class Menu(Base):
         w, h = screen.get_size()
 
         first_line = 100
-
-        self.car_img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
-        self.car_img_position = (w / 2 - 100 - self.car_img.get_width() / 2, first_line - self.car_img.get_height() / 2)
-
+        img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
         self.objects = [
             Text("PyGame", offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
 
@@ -42,6 +39,8 @@ class Menu(Base):
 
             Text("Горячие клавиши", offset=(w / 2, 450), size=20, type=Text.TYPE__BOLD),
             Text("Q, Esc - выход", offset=(w / 2, 480), size=20),
+
+            Simple(update=lambda screen: screen.blit(img, (w / 2 - 100 - img.get_width() / 2, first_line - img.get_height() / 2))),
 
             Simple(lambda screen: draw.line(screen, colors['blue'], (0, 560), (screen.get_size()[0], 560), 2)),
 
@@ -58,7 +57,6 @@ class Menu(Base):
 
     def update(self, screen):
         [o.update(screen) for o in self.objects]
-        screen.blit(self.car_img, self.car_img_position)
 
     def render(self, screen):
         [o.render(screen) for o in self.objects]
