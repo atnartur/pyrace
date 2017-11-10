@@ -1,9 +1,8 @@
-import time
 from os import path
 
 from pygame import *
 
-from core.events import Direction, Events
+from core.events import Direction
 from objects.base import Base
 
 

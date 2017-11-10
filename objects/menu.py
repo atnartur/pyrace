@@ -1,4 +1,5 @@
 from pygame import *
+from os import path
 from objects.base import Base
 from objects.car import Car
 from objects.text import Text
@@ -30,8 +31,11 @@ class Menu(Base):
         w, h = screen.get_size()
 
         first_line = 100
+
+        self.car_img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
+        self.car_img_position = (w / 2 - 100 - self.car_img.get_width() / 2, first_line - self.car_img.get_height() / 2)
+
         self.objects = [
-            Car(w / 2 - 100, first_line),
             Text("PyGame", offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
 
             Menu.Button("Нажмите ПРОБЕЛ, чтобы начать игру", (w / 2, 300)),
@@ -54,6 +58,7 @@ class Menu(Base):
 
     def update(self, screen):
         [o.update(screen) for o in self.objects]
+        screen.blit(self.car_img, self.car_img_position)
 
     def render(self, screen):
         [o.render(screen) for o in self.objects]
