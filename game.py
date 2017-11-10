@@ -5,6 +5,7 @@ from objects.car import Car
 from objects.walls import Walls
 from settings import *
 from core.events import Events
+from app import providers
 
 
 class Game:
@@ -21,3 +22,7 @@ class Game:
         KeyBindings.register(pygame.K_LEFT, Events.instance.shift_left)
         KeyBindings.register(pygame.K_RIGHT, Events.instance.shift_right)
         KeyBindings.register(pygame.K_UP, lambda: Events.instance.accelerate(2))
+        providers.append(self.provider_handler)
+
+    def provider_handler(self, screen):
+        print('I\'m a game provider!')
