@@ -29,7 +29,7 @@ class Car(Base):
             self.speed *= self.acceleration_coefficient
             self.is_acceleration_started = True
             self.acceleration_start_time = time.time()
-        acc_timeout = Events.instance.acceleration_timeout
+        acc_timeout = Events.acceleration_timeout
         if self.is_accelerated and time.time() - self.acceleration_start_time >= acc_timeout:
             self.speed //= self.acceleration_coefficient
             self.is_accelerated = False

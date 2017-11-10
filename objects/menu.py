@@ -33,7 +33,6 @@ class Menu(Base):
         first_line = 100
         img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
         self.objects = [
-            Car(w / 2 - 100, first_line),
             Text(name, offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
 
             Menu.Button("Нажмите ПРОБЕЛ, чтобы начать игру", (w / 2, 300)),
