@@ -1,5 +1,6 @@
 import pygame, time
 from core.key_bindings import KeyBindings
+from app import providers
 
 class Loop:
     def __init__(self, screen, objects):
@@ -20,6 +21,8 @@ class Loop:
                 frames = 0
 
             self.screen.fill((0, 0, 0))
+
+            [p(self.screen) for p in providers]
 
             [o.update(self.screen) for o in self.objects]
 

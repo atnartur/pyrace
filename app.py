@@ -1,13 +1,14 @@
 import pygame
 from settings import *
-from game import Game
 
 objects = []
+providers = [] # глобальные обработчики события отрисовки. Такие обработчики не привязаны к объектам
 
 if __name__ == '__main__':
     from core.loop import Loop
     from core.key_bindings import KeyBindings
     from objects.menu import Menu
+    from game import Game
 
     pygame.display.init()
     pygame.display.set_caption(name)
