@@ -1,34 +1,38 @@
 from os import path
 
-from objects.interface.button import Button
 from pygame import *
 
 from core.key_bindings import KeyBindings
+from core.multiplayer_settings import MultiplayerSettings
 from objects.base import Base
 from objects.game.car import Car
+from objects.interface.button import Button
+from objects.interface.selector import Selector
 from objects.interface.text import Text
 from objects.simple import Simple
 from settings import colors, name
 
 
 class Menu(Base):
+    GAME_TYPE__SINGLEPLAYER = 0
+    GAME_TYPE__MULTIPLAYER = 1
+
     def __init__(self, screen, game):
+        self.game = game
+        self.screen = screen
         w, h = screen.get_size()
 
         first_line = 100
         img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
 
-        self.buttons = [
-            Button("Один игрок", (w / 2, 240), is_active=True),
+        self.selector = Selector([
+            Button("Один игрок", (w / 2, 240)),
             Button("Мультиплеер", (w / 2, 360)),
-        ]
+        ])
 
-        self.objects = [
+        self.objects = self.selector.buttons + [
             Text(name, offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
             Simple(update=lambda screen: screen.blit(img, (w / 2 - 100 - img.get_width() / 2, first_line - img.get_height() / 2))),
-
-            self.buttons[0],
-            self.buttons[1],
 
             Text("Горячие клавиши", offset=(w / 2, 450), size=20, type=Text.TYPE__BOLD),
             Text("Пробел - выбор варианта", offset=(w / 2, 480), size=20),
@@ -40,15 +44,8 @@ class Menu(Base):
             Text("© 2017 Булат Гиниятуллин, Артур Атнагулов", offset=(w / 2, 580), size=17),
         ]
 
-        def start():
-            print('start')
-            self.objects = []
-            KeyBindings.deregister(K_SPACE)
-            game.start()
+        KeyBindings.register(K_SPACE, self.start)
 
-        KeyBindings.register(K_SPACE, start)
-        KeyBindings.register(K_UP, lambda: self.set_active_button(0))
-        KeyBindings.register(K_DOWN, lambda: self.set_active_button(1))
 
     def update(self, screen):
         [o.update(screen) for o in self.objects]
@@ -56,10 +53,12 @@ class Menu(Base):
     def render(self, screen):
         [o.render(screen) for o in self.objects]
 
-    def set_active_button(self, index):
-        for arr_index, button in enumerate(self.buttons):
-            if arr_index == index:
-                button.is_active = True
-            else:
-                button.is_active = False
+    def start(self):
+        KeyBindings.deregister(K_SPACE)
+        self.selector.close()
+        self.objects = []
 
+        if self.selector.active == Menu.GAME_TYPE__SINGLEPLAYER:
+            self.game.start()
+        else:
+            MultiplayerSettings(self)
