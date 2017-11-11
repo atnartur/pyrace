@@ -5,7 +5,7 @@ from objects.text import Text
 
 class InfoPanel(Base):
     def __init__(self):
-        self.score = 1
+        self.score = 0
 
         self.header_x = 100
         self.score_x = self.header_x + 260

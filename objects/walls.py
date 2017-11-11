@@ -25,7 +25,9 @@ class Walls(Base):
         self.acceleration_start_time = 0
         self.is_acceleration_started = False
         self.acceleration_coefficient = 1
+        self.removed_walls = -1
         self.generate()
+        Events.last_wall = self.get_last_wall()
 
     def generate_wall(self, top_margin):
         direction = randint(0, 1) == 0
@@ -60,10 +62,13 @@ class Walls(Base):
         if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin:
             self.generate_wall(self.top_margin)
 
-        last_wall = max(self.coordinates, key=lambda x: x[0])
-
-        if last_wall[0] >= h:
+        last_wall = self.get_last_wall()
+        if last_wall is not None and last_wall[0] >= h:
             self.coordinates.remove(last_wall)
+            self.removed_walls += 1
+
+    def get_last_wall(self):
+        return self.coordinates[0]
 
     def render(self, screen):
         offset_x, offset_y = self.offset
