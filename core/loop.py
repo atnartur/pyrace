@@ -28,9 +28,9 @@ class Loop:
 
             frames += 1
 
-            self.screen.lock()
+            # self.screen.lock()
             [o.render(self.screen) for o in self.objects]
-            self.screen.unlock()
+            # self.screen.unlock()
 
             pygame.display.flip()
 

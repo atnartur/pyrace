@@ -13,10 +13,10 @@ class Button(Base):
         self.text = Text(text, offset=(x, y), size=30, type=Text.TYPE__BOLD)
 
     def update(self, screen):
+        pass
+
+    def render(self, screen):
         x, y = self.offset
         x_size, y_size = self.sizes
         draw.rect(screen, self.color, (x - x_size / 2, y - y_size / 2, x_size, y_size))
-        self.text.update(screen)
-
-    def render(self, screen):
-        pass
+        self.text.render(screen)

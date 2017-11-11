@@ -7,8 +7,8 @@ class Final(Base):
         w, h = screen.get_size()
         self.button = Button("Вы набрали %s очков" % score, (w / 2, h / 2), color=colors['red'])
     def update(self, screen):
-        self.button.update(screen)
+        pass
 
     def render(self, screen):
-        pass
+        self.button.render(screen)
 
