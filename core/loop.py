@@ -8,6 +8,26 @@ class Loop:
         self.objects = objects
         self.is_go = False
 
+    def fill_black(self):
+        self.screen.fill((0, 0, 0))
+
+    def providers(self):
+        [p(self.screen) for p in providers]
+
+    def update(self):
+        [o.update(self.screen) for o in self.objects]
+
+    def render(self):
+        [o.render(self.screen) for o in self.objects]
+        pygame.display.flip()
+        pygame.event.pump()
+
+    def force_rerender(self):
+        self.fill_black()
+        self.providers()
+        self.update()
+        self.render()
+
     def run(self):
         self.is_go = True
 
@@ -20,21 +40,10 @@ class Loop:
                 t = time.time()
                 frames = 0
 
-            self.screen.fill((0, 0, 0))
-
-            [p(self.screen) for p in providers]
-
-            [o.update(self.screen) for o in self.objects]
+            self.force_rerender()
 
             frames += 1
 
-            # self.screen.lock()
-            [o.render(self.screen) for o in self.objects]
-            # self.screen.unlock()
-
-            pygame.display.flip()
-
-            pygame.event.pump()
             KeyBindings.exec(pygame.key.get_pressed())
 
             for event in pygame.event.get():

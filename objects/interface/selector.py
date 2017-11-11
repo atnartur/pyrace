@@ -48,5 +48,6 @@ class Selector(Base):
         self.update_active()
 
     def close(self):
+        self.buttons = []
         KeyBindings.deregister(K_UP)
         KeyBindings.deregister(K_DOWN)

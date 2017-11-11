@@ -46,6 +46,8 @@ class Menu(Base):
 
         KeyBindings.register(K_SPACE, self.start)
 
+    def clear_screen(self):
+        self.objects = []
 
     def update(self, screen):
         [o.update(screen) for o in self.objects]
@@ -56,7 +58,6 @@ class Menu(Base):
     def start(self):
         KeyBindings.deregister(K_SPACE)
         self.selector.close()
-        self.objects = []
 
         if self.selector.active == Menu.GAME_TYPE__SINGLEPLAYER:
             self.game.start()

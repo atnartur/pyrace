@@ -7,3 +7,6 @@ width = 800
 height = 600
 
 name = 'PyRace'
+
+server_port = 1234
+server_packet_size = 1024

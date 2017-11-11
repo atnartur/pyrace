@@ -22,6 +22,7 @@ if __name__ == '__main__':
     objects.append(Menu(screen, game))
 
     loop = Loop(screen, objects)
+    game.loop = loop
 
     KeyBindings.register(pygame.K_ESCAPE, lambda: loop.stop())
     KeyBindings.register(pygame.K_q, lambda: loop.stop())
