@@ -4,6 +4,7 @@ from core.key_bindings import KeyBindings
 from objects.car import Car
 from objects.walls import Walls
 from objects.info_panel import InfoPanel
+from objects.final import Final
 from settings import *
 from core.events import Events
 from app import providers
@@ -34,7 +35,9 @@ class Game:
 
     def provider_handler(self, screen):
         if Events.instance.is_collision():
-            pass
+            self.objects.append(Final(screen, self.info_panel.score))
+            self.walls.stop()
+            self.car.stop()
 
         last_wall = self.walls.get_last_wall()
 

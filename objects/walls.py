@@ -27,6 +27,7 @@ class Walls(Base):
         self.acceleration_coefficient = 1
         self.removed_walls = -1
         self.generate()
+        self.is_stopped = False
         Events.last_wall = self.get_last_wall()
 
     def generate_wall(self, top_margin):
@@ -46,6 +47,9 @@ class Walls(Base):
             y += self.margin/self.cube_size
 
     def update(self, screen):
+        if self.is_stopped:
+            return
+
         if self.is_accelerated and not self.is_acceleration_started:
             self.speed *= self.acceleration_coefficient
             self.is_acceleration_started = True
@@ -80,3 +84,6 @@ class Walls(Base):
             else:
                 x = offset_x + w - width
             draw.rect(screen, self.color, (x, offset_y + y, width, self.cube_size))
+
+    def stop(self):
+        self.is_stopped = True
