@@ -1,13 +1,13 @@
 import pygame
+from objects.game.final import Final
+from objects.game.info_panel import InfoPanel
+from objects.game.walls import Walls
 
-from core.key_bindings import KeyBindings
-from objects.car import Car
-from objects.walls import Walls
-from objects.info_panel import InfoPanel
-from objects.final import Final
-from settings import *
-from core.events import Events
 from app import providers
+from core.events import Events
+from core.key_bindings import KeyBindings
+from objects.game.car import Car
+from settings import *
 
 
 class Player:

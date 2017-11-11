@@ -1,5 +1,5 @@
 from objects.base import Base
-from objects.button import Button
+from objects.interface.button import Button
 from settings import colors
 
 class Final(Base):

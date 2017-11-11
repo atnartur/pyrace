@@ -1,7 +1,9 @@
 from pygame import *
+
 from objects.base import Base
-from objects.text import Text
+from objects.interface.text import Text
 from settings import colors
+
 
 class Button(Base):
     def __init__(self, text, offset, is_active=False, color=colors['blue']):

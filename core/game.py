@@ -1,7 +1,7 @@
 from core.player import Player
 
 class Game:
-    def __init__(self, objects, count_of_players=1):
+    def __init__(self, objects, with_remote=False):
         self.objects = objects
         self.player = Player(objects)
 

@@ -8,7 +8,7 @@ providers = [] # глобальные обработчики события от
 if __name__ == '__main__':
     from core.loop import Loop
     from core.key_bindings import KeyBindings
-    from objects.menu import Menu
+    from objects.interface.menu import Menu
     from core.game import Game
 
     pygame.display.init()

@@ -1,12 +1,15 @@
-from pygame import *
 from os import path
-from objects.base import Base
-from objects.car import Car
-from objects.text import Text
-from objects.simple import Simple
-from objects.button import Button
-from settings import colors, name
+
+from objects.interface.button import Button
+from pygame import *
+
 from core.key_bindings import KeyBindings
+from objects.base import Base
+from objects.game.car import Car
+from objects.interface.text import Text
+from objects.simple import Simple
+from settings import colors, name
+
 
 class Menu(Base):
     def __init__(self, screen, game):

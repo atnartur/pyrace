@@ -1,7 +1,9 @@
 from pygame import *
+
 from objects.base import Base
+from objects.interface.text import Text
 from settings import colors, name
-from objects.text import Text
+
 
 class InfoPanel(Base):
     def __init__(self):
