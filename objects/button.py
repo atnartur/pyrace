@@ -19,4 +19,7 @@ class Button(Base):
         x, y = self.offset
         x_size, y_size = self.sizes
         draw.rect(screen, self.color, (x - x_size / 2, y - y_size / 2, x_size, y_size))
+        if not self.is_active:
+            margin = 1
+            draw.rect(screen, (0,0,0), (x + margin - x_size / 2, y + margin- y_size / 2, x_size - margin * 2, y_size - margin * 2))
         self.text.render(screen)
