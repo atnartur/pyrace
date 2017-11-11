@@ -5,7 +5,7 @@ from objects.text import Text
 
 class InfoPanel(Base):
     def __init__(self):
-        self.score = 1
+        self.score = 0
 
         self.header_x = 100
         self.score_x = self.header_x + 260
@@ -24,12 +24,12 @@ class InfoPanel(Base):
         ]
 
     def update(self, screen):
-        w, h = screen.get_size()
-        draw.rect(screen, colors['blue'], (0, 0, w, 50))
-        Text('%03d' % self.score, offset=(self.score_x, 25), size=41, type=Text.TYPE__DIGITAL).update(screen)
-        draw.line(screen, (255, 255, 255), (self.score_x - 30, 0), (self.score_x - 30, 49))
-        draw.line(screen, (255, 255, 255), (self.score_x + 117, 0), (self.score_x + 117, 49))
-        [o.update(screen) for o in self.objects]
+        pass
 
     def render(self, screen):
-        pass
+        w, h = screen.get_size()
+        draw.rect(screen, colors['blue'], (0, 0, w, 50))
+        Text('%03d' % self.score, offset=(self.score_x, 25), size=41, type=Text.TYPE__DIGITAL).render(screen)
+        draw.line(screen, (255, 255, 255), (self.score_x - 30, 0), (self.score_x - 30, 49))
+        draw.line(screen, (255, 255, 255), (self.score_x + 117, 0), (self.score_x + 117, 49))
+        [o.render(screen) for o in self.objects]

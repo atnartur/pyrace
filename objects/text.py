@@ -13,6 +13,9 @@ class Text(Base):
         self.font = font.Font(type, size)
 
     def update(self, screen):
+        pass
+
+    def render(self, screen):
         text = self.font.render(self.text, True, self.color)
         # print(self.text, text.get_width(), text.get_height())
 
@@ -21,6 +24,3 @@ class Text(Base):
         y -= text.get_height() / 2
 
         screen.blit(text, (x, y))
-
-    def render(self, screen):
-        pass
