@@ -1,4 +1,5 @@
 import pygame
+
 from settings import *
 
 objects = []
@@ -8,7 +9,7 @@ if __name__ == '__main__':
     from core.loop import Loop
     from core.key_bindings import KeyBindings
     from objects.menu import Menu
-    from game import Game
+    from core.game import Game
 
     pygame.display.init()
     pygame.display.set_caption(name)

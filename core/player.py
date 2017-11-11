@@ -10,7 +10,7 @@ from core.events import Events
 from app import providers
 
 
-class Game:
+class Player:
     def __init__(self, objects):
         self.objects = objects
 
