@@ -7,6 +7,15 @@ class Loop:
         self.screen = screen
         self.objects = objects
         self.is_go = False
+        self.event_handlers = []
+
+        self.event_handlers.append(self.stop_handler)
+
+
+    def stop_handler(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.stop()
 
     def fill_black(self):
         self.screen.fill((0, 0, 0))
@@ -46,9 +55,9 @@ class Loop:
 
             KeyBindings.exec(pygame.key.get_pressed())
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.stop()
+            events = pygame.event.get()
+
+            [p(events) for p in self.event_handlers]
 
         pygame.display.quit()
 

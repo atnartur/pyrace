@@ -1,10 +1,12 @@
 from pygame import *
 import time
 from core.key_bindings import KeyBindings
+from core.textinput import TextInput
 from objects.interface.button import Button
 from objects.interface.selector import Selector
 from objects.interface.text import Text
-from settings import server_port
+from objects.simple import Simple
+from settings import server_port, colors
 
 class MultiplayerSettings:
     def __init__(self, menu):
@@ -29,14 +31,14 @@ class MultiplayerSettings:
         self.menu.game.loop.force_rerender()
 
         if self.selector.active == 0: # мы сервер
-            self.server_step1()
+            self.server()
         else: # мы клиент
-            pass
+            self.client()
 
-    def server_step1(self):
+    def server(self):
         print('server step 1')
         w = self.menu.screen.get_width()
-        self.menu.objects.append(Text("Ждем подключений", offset=(w / 2, 100), size=20, type=Text.TYPE__BOLD))
+        self.menu.objects.append(Text("Ждем подключений", offset=(w / 2, 100), size=20, type=Text.TYPE__BOLD, color=colors['blue']))
 
         self.pos = 150
 
@@ -63,3 +65,45 @@ class MultiplayerSettings:
 
         print('waiting for connections')
         self.menu.game.server.waiting_for_connect()
+
+    def client(self):
+        time.sleep(0.1) # ждем, пока пользователь отпустит кнопку пробела
+
+        print('server step 1')
+        w = self.menu.screen.get_width()
+        self.menu.objects.append(Text("Введите IP адрес сервера:", offset=(w / 2, 100), size=20, type=Text.TYPE__BOLD, color=colors['blue']))
+        self.menu.objects.append(Text("И нажмите ПРОБЕЛ", offset=(w / 2, 130), size=18))
+
+        textinput = TextInput(Text.TYPE__REGULAR, 18, text_color=(255, 255, 255), cursor_color=(255, 255, 250))
+
+        def text_view(screen):
+            surface = textinput.get_surface()
+            width, height = surface.get_size()
+            screen.blit(surface, (w / 2 - width / 2, 300))
+
+        self.menu.game.loop.event_handlers.append(textinput.update)
+        self.menu.objects.append(Simple(render=text_view))
+
+        def next():
+            ip = textinput.get_text().strip()
+            textinput.input_string = ip
+            try:
+                self.menu.game.create_client(ip)
+            except ConnectionRefusedError as e:
+                print(e)
+                self.menu.objects.append(Text(
+                    "Не удалось установить соединение с %s. Попробуйте ввести другой адрес" % ip,
+                    offset=(w / 2, 400),
+                    size=18,
+                    type=Text.TYPE__BOLD,
+                    color=colors['blue']
+                ))
+                self.menu.game.loop.force_rerender()
+            else:
+                self.menu.game.client.send_start()
+                KeyBindings.deregister(K_SPACE)
+                self.menu.game.loop.event_handlers.remove(textinput.update)
+                self.menu.objects = []
+
+
+        KeyBindings.register(K_SPACE, next)

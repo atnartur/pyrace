@@ -1,4 +1,5 @@
 from core.player import Player
+from multiplayer.client import Client
 from multiplayer.server import Server
 
 
@@ -12,3 +13,6 @@ class Game:
 
     def create_server(self):
         self.server = Server()
+
+    def create_client(self, ip):
+        self.client = Client(ip)

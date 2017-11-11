@@ -4,6 +4,7 @@ from settings import *
 
 objects = []
 providers = [] # глобальные обработчики события отрисовки. Такие обработчики не привязаны к объектам
+events_handlers = [] # обрботчики событий pygame
 
 if __name__ == '__main__':
     from core.loop import Loop
