@@ -22,7 +22,7 @@ class Car(Base):
         self.acceleration_start_time = 0
         self.is_acceleration_started = False
         self.acceleration_coefficient = 1
-        self.speed = 1
+        self.speed = 2
         self.is_stopped = False
 
     def update(self, screen):

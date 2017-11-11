@@ -18,14 +18,14 @@ class Walls(Base):
         self.margin = margin
         self.offset = offset
         self.min_wall_width = int(size[0]/cube_size / 4)  # минимальная ширина стены
-        self.max_wall_width = 3 * int(size[0]/cube_size / 4)  # максимальная ширина стены
+        self.max_wall_width = 3 * int(size[0]/cube_size / 5)  # максимальная ширина стены
         self.top_margin = 50
         self.speed = 1
         self.is_accelerated = False
         self.acceleration_start_time = 0
         self.is_acceleration_started = False
         self.acceleration_coefficient = 1
-        self.removed_walls = -1
+        self.removed_walls = 0
         self.generate()
         self.is_stopped = False
         Events.last_wall = self.get_last_wall()
