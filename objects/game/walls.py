@@ -27,7 +27,6 @@ class Walls(Base):
         self.acceleration_coefficient = 1
         self.removed_walls = 0
         self.wall_generated_callback = None
-        self.generate()
         self.is_stopped = False
         Events.last_wall = self.get_last_wall()
 
@@ -51,7 +50,7 @@ class Walls(Base):
             y += self.margin/self.cube_size
 
     def update(self, screen):
-        if self.is_stopped:
+        if self.is_stopped or len(self.coordinates) == 0:
             return
 
         if self.is_accelerated and not self.is_acceleration_started:
@@ -76,7 +75,10 @@ class Walls(Base):
             self.removed_walls += 1
 
     def get_last_wall(self):
-        return self.coordinates[0]
+        if len(self.coordinates) > 0:
+            return self.coordinates[0]
+        else:
+            return None
 
     def render(self, screen):
         offset_x, offset_y = self.offset

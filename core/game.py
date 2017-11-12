@@ -1,8 +1,8 @@
 from core.player import Player
+from core.remote_player import RemotePlayer
 from multiplayer.client import Client
 from multiplayer.remote import Remote
 from multiplayer.server import Server
-
 
 class Game:
     def __init__(self, objects):
@@ -15,6 +15,8 @@ class Game:
     def multiplayer_start(self):
         Remote.events_init()
         self.start()
+        self.remote_player = RemotePlayer(self.player.objects)
+        self.remote_player.start()
 
     def create_server(self):
         self.server = Server()

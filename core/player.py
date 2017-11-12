@@ -17,6 +17,7 @@ class Player:
     def start(self):
         self.car = Car(width / 2, height - 60)
         self.walls = Walls((width, height), margin=1.5 * self.car.img.get_height())
+        self.walls.generate()
         self.info_panel = InfoPanel()
 
         self.objects.append(self.car)
