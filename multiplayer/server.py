@@ -22,4 +22,5 @@ class Server:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         print('server close')
+        self.s.shutdown(socket.SHUT_RDWR)
         self.s.close()

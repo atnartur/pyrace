@@ -12,10 +12,14 @@ class Game:
     def start(self):
         self.player.start()
 
+    def multiplayer_start(self):
+        Remote.events_init()
+        self.start()
+
     def create_server(self):
         self.server = Server()
-        self.remote = Remote(self.server)
+        Remote.set_instance(self.server)
 
     def create_client(self, ip):
         self.client = Client(ip)
-        self.remote = Remote(self.client)
+        Remote.set_instance(self.client)

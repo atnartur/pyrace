@@ -2,6 +2,7 @@ from pygame import *
 import time
 from core.key_bindings import KeyBindings
 from core.textinput import TextInput
+from multiplayer.remote import Remote
 from objects.interface.button import Button
 from objects.interface.selector import Selector
 from objects.interface.text import Text
@@ -11,9 +12,6 @@ from settings import server_port, colors
 class MultiplayerSettings:
     def __init__(self, menu):
         self.menu = menu
-        self.step1()
-
-    def step1(self):
         w = self.menu.screen.get_width()
         self.selector = None
         self.selector = Selector([
@@ -22,9 +20,9 @@ class MultiplayerSettings:
         ])
         self.menu.objects = self.selector.buttons
         time.sleep(0.1) # ждем, пока пользователь отпустит кнопку пробела
-        KeyBindings.register(K_SPACE, self.step1_handler)
+        KeyBindings.register(K_SPACE, self.handler)
 
-    def step1_handler(self):
+    def handler(self):
         KeyBindings.deregister(K_SPACE)
         self.selector.close()
         self.menu.clear_screen()
@@ -65,14 +63,16 @@ class MultiplayerSettings:
 
         print('waiting for connections')
         self.menu.game.server.waiting_for_connect()
-        cmd = self.menu.game.remote.receive()
-        print(cmd)
-        self.menu.game.remote.send_start()
+        msg = Remote.receive()
+        print(msg)
+        if msg['command'] == 'start':
+            self.menu.clear_screen()
+            Remote.send_start()
+            self.menu.game.multiplayer_start()
 
     def client(self):
         time.sleep(0.1) # ждем, пока пользователь отпустит кнопку пробела
 
-        print('server step 1')
         w = self.menu.screen.get_width()
         self.menu.objects.append(Text("Введите IP адрес сервера:", offset=(w / 2, 100), size=20, type=Text.TYPE__BOLD, color=colors['blue']))
         self.menu.objects.append(Text("И нажмите ПРОБЕЛ", offset=(w / 2, 130), size=18))
@@ -103,12 +103,15 @@ class MultiplayerSettings:
                 ))
                 self.menu.game.loop.force_rerender()
             else:
-                self.menu.game.remote.send_start()
-                cmd = self.menu.game.remote.receive()
-                print(cmd)
-                KeyBindings.deregister(K_SPACE)
-                self.menu.game.loop.event_handlers.remove(textinput.update)
-                self.menu.objects = []
+                Remote.send_start()
+
+                msg = Remote.receive()
+                print(msg)
+                if msg['command'] == 'start':
+                    self.menu.game.loop.event_handlers.remove(textinput.update)
+                    KeyBindings.deregister(K_SPACE)
+                    self.menu.clear_screen()
+                    self.menu.game.multiplayer_start()
 
 
         KeyBindings.register(K_SPACE, next)
