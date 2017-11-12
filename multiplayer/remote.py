@@ -23,10 +23,11 @@ class Remote:
         print('remote events start')
         Remote.instance.sender.setblocking(0)
         providers.append(Remote.provider)
+        print(providers)
 
     @staticmethod
     def stop():
-        providers.remove(Remote.provider)
+        pass
 
     @staticmethod
     def send(command, data = None):

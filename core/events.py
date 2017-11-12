@@ -16,7 +16,7 @@ class Events:
         self.car = car
         self.walls = walls
         self.acceleration_coefficient = 1
-
+        Remote.sender.wall(self.walls.coordinates)
         self.car.acc_stop_callback = self.accelerate_car_stop
 
     def is_collision(self):
@@ -50,8 +50,6 @@ class Events:
         self.car.direction = Direction.RIGHT
         Remote.sender.move(Direction.RIGHT, self.car.x)
 
-    # def shift_stop(self):
-
     def accelerate(self, k):
         self.walls.acceleration_coefficient = k
         self.walls.is_accelerated = True
@@ -64,3 +62,10 @@ class Events:
 
     def accelerate_car_stop(self):
         Remote.sender.acc_stop(self.car.x)
+
+    def end(self, score):
+        Remote.sender.end(score)
+        Remote.stop()
+
+    def wall_generated(self, wall):
+        Remote.sender.wall([wall])

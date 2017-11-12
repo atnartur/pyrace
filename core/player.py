@@ -38,6 +38,7 @@ class Player:
             self.objects.append(Final(screen, self.info_panel.score))
             self.walls.stop()
             self.car.stop()
+            Events.instance.end(self.info_panel.score)
 
         last_wall = self.walls.get_last_wall()
 

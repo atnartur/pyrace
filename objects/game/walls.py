@@ -26,6 +26,7 @@ class Walls(Base):
         self.is_acceleration_started = False
         self.acceleration_coefficient = 1
         self.removed_walls = 0
+        self.wall_generated_callback = None
         self.generate()
         self.is_stopped = False
         Events.last_wall = self.get_last_wall()
@@ -33,7 +34,10 @@ class Walls(Base):
     def generate_wall(self, top_margin):
         direction = randint(0, 1) == 0
         width = randint(self.min_wall_width, self.max_wall_width)
-        self.coordinates.append((top_margin, width * self.cube_size, direction))
+        wall = (top_margin, width * self.cube_size, direction)
+        self.coordinates.append(wall)
+        if self.wall_generated_callback is not None:
+            self.wall_generated_callback(wall)
 
     def generate(self):
         w, h = self.size
