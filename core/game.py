@@ -17,6 +17,7 @@ class Game:
         self.start()
         self.remote_player = RemotePlayer(self.player.objects)
         self.remote_player.start()
+        Remote.receiver.player = self.remote_player
 
     def create_server(self):
         self.server = Server()

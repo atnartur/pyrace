@@ -40,6 +40,7 @@ class Player:
             self.walls.stop()
             self.car.stop()
             Events.instance.end(self.info_panel.score)
+            providers.remove(self.provider_handler)
 
         last_wall = self.walls.get_last_wall()
 

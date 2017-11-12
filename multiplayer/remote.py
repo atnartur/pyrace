@@ -60,7 +60,8 @@ class Remote:
             if err != errno.EAGAIN and err != errno.EWOULDBLOCK: # a "real" error occurred
                 print('socket error', e)
         else:
-            print(msg)
+            if msg is not None:
+                getattr(Remote.receiver, msg['command'])(msg['data'])
 
 Remote.sender = Sender(Remote)
 Remote.receiver = Receiver(Remote)
