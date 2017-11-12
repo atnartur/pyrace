@@ -22,21 +22,25 @@ class Menu(Base):
         self.screen = screen
         w, h = screen.get_size()
 
-        first_line = 100
+        first_line = 70
         img = image.load(path.join('files', 'images', 'car_%s.png' % Car.COLOR__BLUE))
 
         self.selector = Selector([
-            Button("Один игрок", (w / 2, 240)),
-            Button("Мультиплеер", (w / 2, 360)),
+            Button("Один игрок", (w / 2, 200)),
+            Button("Мультиплеер", (w / 2, 310)),
         ])
 
         self.objects = self.selector.buttons + [
             Text(name, offset=(w / 2 + 30, first_line), size=50, type=Text.TYPE__BOLD),
             Simple(update=lambda screen: screen.blit(img, (w / 2 - 100 - img.get_width() / 2, first_line - img.get_height() / 2))),
 
-            Text("Горячие клавиши", offset=(w / 2, 450), size=20, type=Text.TYPE__BOLD),
-            Text("Пробел - выбор варианта", offset=(w / 2, 480), size=20),
-            Text("Стрелки вверх/вниз - изменение варианта", offset=(w / 2, 500), size=20),
+            Text("Используйте пробел и стрелки для", offset=(w / 2, 380), size=20),
+            Text("навигации по меню", offset=(w / 2, 400), size=20),
+
+            Text("Игровые горячие клавиши", offset=(w / 2, 440), size=20, type=Text.TYPE__BOLD),
+            Text("Стрелка вверх - ускорение вперед", offset=(w / 2, 460), size=20),
+            Text("Стрелки влево/вправо - управление машиной", offset=(w / 2, 480), size=20),
+            Text("TAB - ускорение поворота машины", offset=(w / 2, 500), size=20),
             Text("Q, Esc - выход", offset=(w / 2, 520), size=20),
 
             Simple(lambda screen: draw.line(screen, colors['blue'], (0, 560), (screen.get_size()[0], 560), 2)),
