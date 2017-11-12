@@ -43,4 +43,5 @@ class Player:
 
         if last_wall is not None and self.car.y < last_wall[0] and self.walls.removed_walls == self.info_panel.score:
             self.info_panel.score += 1
+            Events.instance.score_update(self.info_panel.score)
             self.previous_last_wall = last_wall

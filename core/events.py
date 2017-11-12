@@ -1,10 +1,5 @@
-from enum import Enum
-
-
-class Direction(Enum):
-    STRAIGHT = 0
-    RIGHT = 1
-    LEFT = 2
+from settings import Direction
+from multiplayer.remote import Remote
 
 
 class Events:
@@ -21,6 +16,8 @@ class Events:
         self.car = car
         self.walls = walls
         self.acceleration_coefficient = 1
+
+        self.car.acc_stop_callback = self.accelerate_car_stop
 
     def is_collision(self):
         screen_w = self.walls.size[0]
@@ -42,16 +39,28 @@ class Events:
             i += 1
         return collision
 
+    def score_update(self, score):
+        Remote.sender.score(score, self.car.x)
+
     def shift_left(self):
         self.car.direction = Direction.LEFT
+        Remote.sender.move(Direction.LEFT, self.car.x)
 
     def shift_right(self):
         self.car.direction = Direction.RIGHT
+        Remote.sender.move(Direction.RIGHT, self.car.x)
+
+    # def shift_stop(self):
 
     def accelerate(self, k):
         self.walls.acceleration_coefficient = k
         self.walls.is_accelerated = True
+        Remote.sender.wall_acc(self.car.x)
 
     def accelerate_car(self, k):
         self.car.acceleration_coefficient = k
         self.car.is_accelerated = True
+        Remote.sender.acc(self.car.x)
+
+    def accelerate_car_stop(self):
+        Remote.sender.acc_stop(self.car.x)

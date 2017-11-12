@@ -67,7 +67,7 @@ class MultiplayerSettings:
         print(msg)
         if msg['command'] == 'start':
             self.menu.clear_screen()
-            Remote.send_start()
+            Remote.sender.start()
             self.menu.game.multiplayer_start()
 
     def client(self):
@@ -103,7 +103,7 @@ class MultiplayerSettings:
                 ))
                 self.menu.game.loop.force_rerender()
             else:
-                Remote.send_start()
+                Remote.sender.start()
 
                 msg = Remote.receive()
                 print(msg)

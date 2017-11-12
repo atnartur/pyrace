@@ -1,7 +1,9 @@
-import json, fcntl, os, socket, errno
+import json, socket, errno
 from settings import server_packet_size
 from app import providers
 from json.decoder import JSONDecodeError
+from multiplayer.sender import Sender
+from multiplayer.receiver import Receiver
 
 class Remote:
     """
@@ -9,14 +11,12 @@ class Remote:
     """
 
     instance = None
+    sender = None
+    receiver = None
 
     @staticmethod
     def set_instance(instance):
         Remote.instance = instance
-
-    @staticmethod
-    def send_start():
-        Remote.send('start')
 
     @staticmethod
     def events_init():
@@ -25,12 +25,18 @@ class Remote:
         providers.append(Remote.provider)
 
     @staticmethod
+    def stop():
+        providers.remove(Remote.provider)
+
+    @staticmethod
     def send(command, data = None):
         if Remote.instance is not None:
-            Remote.instance.sender.sendall(json.dumps({
+            packet = {
                 'command': command,
                 'data': data
-            }).encode())
+            }
+            print('socket send', packet)
+            Remote.instance.sender.sendall(json.dumps(packet).encode())
 
     @staticmethod
     def receive():
@@ -38,7 +44,9 @@ class Remote:
             return None
         res = Remote.instance.sender.recv(server_packet_size).decode()
         try:
-            return json.loads(res)
+            packet = json.loads(res)
+            print('socket received', packet)
+            return packet
         except JSONDecodeError:
             return None
 
@@ -52,3 +60,6 @@ class Remote:
                 print('socket error', e)
         else:
             print(msg)
+
+Remote.sender = Sender(Remote)
+Remote.receiver = Receiver(Remote)
