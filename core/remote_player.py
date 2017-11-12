@@ -1,7 +1,11 @@
+import pygame
+
 from objects.game.car import Car
+from objects.game.final import Final
 from objects.game.info_panel import InfoPanel
 from objects.game.walls import Walls
 from settings import *
+
 
 class RemotePlayer:
     def __init__(self, objects):
@@ -16,3 +20,9 @@ class RemotePlayer:
         self.objects.append(self.car)
         self.objects.append(self.walls)
         self.objects.append(self.info_panel)
+
+    def end(self, score):
+        screen = pygame.display.set_mode((width, height))
+        self.objects.append(Final(screen, score, offset_x=width))
+        self.walls.stop()
+        self.car.stop()
