@@ -1,5 +1,5 @@
 from pygame import *
-import time
+import time, os
 from core.key_bindings import KeyBindings
 from core.textinput import TextInput
 from multiplayer.remote import Remote
@@ -12,7 +12,11 @@ from settings import server_port, colors
 class MultiplayerSettings:
     def __init__(self, menu):
         self.menu = menu
-        w = self.menu.screen.get_width()
+
+        w, h = self.menu.screen.get_size()
+        w *= 2
+        display.set_mode((w, h))
+
         self.selector = None
         self.selector = Selector([
             Button("Запустить сервер", (w / 2, 240)),

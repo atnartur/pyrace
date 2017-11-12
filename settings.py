@@ -6,7 +6,7 @@ colors = {
     'red': (255, 0, 0)
 }
 
-width = 800
+width = 500
 height = 600
 
 name = 'PyRace'
