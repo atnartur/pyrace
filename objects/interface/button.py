@@ -7,7 +7,7 @@ from settings import colors
 
 class Button(Base):
     def __init__(self, text, offset, is_active=False, color=colors['blue']):
-        self.sizes = (600, 100)
+        self.sizes = (390, 100)
         self.offset = offset
         self.is_active = is_active
         self.color = color

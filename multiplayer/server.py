@@ -5,7 +5,7 @@ class Server:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.bind(('', server_port))
-        self.s.listen(2)
+        self.s.listen(1)
         self.msg_size = server_packet_size
 
     def get_machine_ip(self):
