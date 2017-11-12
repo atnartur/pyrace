@@ -58,6 +58,7 @@ class Menu(Base):
     def start(self):
         KeyBindings.deregister(K_SPACE)
         self.selector.close()
+        self.clear_screen()
 
         if self.selector.active == Menu.GAME_TYPE__SINGLEPLAYER:
             self.game.start()

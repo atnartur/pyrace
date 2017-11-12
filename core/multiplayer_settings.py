@@ -65,6 +65,9 @@ class MultiplayerSettings:
 
         print('waiting for connections')
         self.menu.game.server.waiting_for_connect()
+        cmd = self.menu.game.remote.receive()
+        print(cmd)
+        self.menu.game.remote.send_start()
 
     def client(self):
         time.sleep(0.1) # ждем, пока пользователь отпустит кнопку пробела
@@ -100,7 +103,9 @@ class MultiplayerSettings:
                 ))
                 self.menu.game.loop.force_rerender()
             else:
-                self.menu.game.client.send_start()
+                self.menu.game.remote.send_start()
+                cmd = self.menu.game.remote.receive()
+                print(cmd)
                 KeyBindings.deregister(K_SPACE)
                 self.menu.game.loop.event_handlers.remove(textinput.update)
                 self.menu.objects = []

@@ -1,4 +1,4 @@
-import socket, json
+import socket
 from settings import server_port, server_packet_size
 
 class Server:
@@ -15,10 +15,11 @@ class Server:
         s.close()
         return ip
 
-    def get_msg(self, conn):
-        return json.load(conn.recv(self.msg_size).decode())
-
     def waiting_for_connect(self):
         conn, addr = self.s.accept()
-        cmd = self.get_msg(conn)
-        print(conn, addr, cmd)
+        print('server connected', conn)
+        self.sender = conn
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('server close')
+        self.s.close()
