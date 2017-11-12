@@ -28,8 +28,8 @@ class Player:
 
         KeyBindings.register(pygame.K_LEFT, Events.instance.shift_left)
         KeyBindings.register(pygame.K_RIGHT, Events.instance.shift_right)
-        KeyBindings.register(pygame.K_UP, lambda: Events.instance.accelerate(2))
-        KeyBindings.register(pygame.K_TAB, lambda: Events.instance.accelerate_car(5))
+        KeyBindings.register(pygame.K_UP, Events.instance.accelerate)
+        KeyBindings.register(pygame.K_TAB, Events.instance.accelerate_car)
 
         providers.append(self.provider_handler)
         self.previous_last_wall = None

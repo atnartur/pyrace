@@ -1,4 +1,5 @@
 from settings import Direction
+from settings import walls_acceleration_coefficient, car_acceleration_coefficient
 from multiplayer.remote import Remote
 
 
@@ -50,13 +51,13 @@ class Events:
         self.car.direction = Direction.RIGHT
         Remote.sender.move(Direction.RIGHT, self.car.x)
 
-    def accelerate(self, k):
-        self.walls.acceleration_coefficient = k
+    def accelerate(self):
+        self.walls.acceleration_coefficient = walls_acceleration_coefficient
         self.walls.is_accelerated = True
         Remote.sender.wall_acc(self.car.x)
 
-    def accelerate_car(self, k):
-        self.car.acceleration_coefficient = k
+    def accelerate_car(self):
+        self.car.acceleration_coefficient = car_acceleration_coefficient
         self.car.is_accelerated = True
         Remote.sender.acc(self.car.x)
 
