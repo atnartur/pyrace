@@ -22,6 +22,6 @@ class RemotePlayer:
         self.objects.append(self.info_panel)
 
     def end(self, score):
-        self.objects.append(Final(score, offset_x=width))
+        self.objects.append(Final(score, offset_x=width, template='Соперник набрал %s очков'))
         self.walls.stop()
         self.car.stop()
