@@ -7,6 +7,35 @@ class Loop:
         self.screen = screen
         self.objects = objects
         self.is_go = False
+        self.event_handlers = []
+
+        self.event_handlers.append(self.stop_handler)
+
+
+    def stop_handler(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.stop()
+
+    def fill_black(self):
+        self.screen.fill((0, 0, 0))
+
+    def providers(self):
+        [p(self.screen) for p in providers]
+
+    def update(self):
+        [o.update(self.screen) for o in self.objects]
+
+    def render(self):
+        [o.render(self.screen) for o in self.objects]
+        pygame.display.flip()
+        pygame.event.pump()
+
+    def force_rerender(self):
+        self.fill_black()
+        self.providers()
+        self.update()
+        self.render()
 
     def run(self):
         self.is_go = True
@@ -20,26 +49,15 @@ class Loop:
                 t = time.time()
                 frames = 0
 
-            self.screen.fill((0, 0, 0))
-
-            [p(self.screen) for p in providers]
-
-            [o.update(self.screen) for o in self.objects]
+            self.force_rerender()
 
             frames += 1
 
-            # self.screen.lock()
-            [o.render(self.screen) for o in self.objects]
-            # self.screen.unlock()
-
-            pygame.display.flip()
-
-            pygame.event.pump()
             KeyBindings.exec(pygame.key.get_pressed())
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.stop()
+            events = pygame.event.get()
+
+            [p(events) for p in self.event_handlers]
 
         pygame.display.quit()
 

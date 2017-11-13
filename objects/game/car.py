@@ -24,6 +24,7 @@ class Car(Base):
         self.acceleration_coefficient = 1
         self.speed = 2
         self.is_stopped = False
+        self.acc_stop_callback = None # колбек, который вызывается после остановки ускорения
 
     def update(self, screen):
         if self.is_stopped:
@@ -38,6 +39,8 @@ class Car(Base):
             self.speed //= self.acceleration_coefficient
             self.is_accelerated = False
             self.is_acceleration_started = False
+            if self.acc_stop_callback is not None:
+                self.acc_stop_callback()
         if self.direction == Direction.LEFT:
             self.x -= self.speed
             self.direction = Direction.STRAIGHT

@@ -1,5 +1,6 @@
 class KeyBindings:
     __bindings = {}
+    extra_handlers = []
 
     @staticmethod
     def register(key, value):

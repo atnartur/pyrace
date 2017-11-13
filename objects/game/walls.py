@@ -26,16 +26,21 @@ class Walls(Base):
         self.is_acceleration_started = False
         self.acceleration_coefficient = 1
         self.removed_walls = 0
-        self.generate()
+        self.wall_generated_callback = None
         self.is_stopped = False
+        self.is_need_generate = False
         Events.last_wall = self.get_last_wall()
 
     def generate_wall(self, top_margin):
         direction = randint(0, 1) == 0
         width = randint(self.min_wall_width, self.max_wall_width)
-        self.coordinates.append((top_margin, width * self.cube_size, direction))
+        wall = (top_margin, width * self.cube_size, direction)
+        self.coordinates.append(wall)
+        if self.wall_generated_callback is not None:
+            self.wall_generated_callback([wall])
 
     def generate(self):
+        self.is_need_generate = True
         w, h = self.size
 
         w = int(w / self.cube_size)
@@ -47,7 +52,7 @@ class Walls(Base):
             y += self.margin/self.cube_size
 
     def update(self, screen):
-        if self.is_stopped:
+        if self.is_stopped or len(self.coordinates) == 0:
             return
 
         if self.is_accelerated and not self.is_acceleration_started:
@@ -63,7 +68,7 @@ class Walls(Base):
         for i in range(len(self.coordinates)):
             y, width, direction = self.coordinates[i]
             self.coordinates[i] = (y + self.speed, width, direction)
-        if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin:
+        if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin and self.is_need_generate:
             self.generate_wall(self.top_margin)
 
         last_wall = self.get_last_wall()
@@ -72,7 +77,10 @@ class Walls(Base):
             self.removed_walls += 1
 
     def get_last_wall(self):
-        return self.coordinates[0]
+        if len(self.coordinates) > 0:
+            return self.coordinates[0]
+        else:
+            return None
 
     def render(self, screen):
         offset_x, offset_y = self.offset
