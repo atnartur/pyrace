@@ -27,7 +27,7 @@ class Sender:
     def acc(self, car_x):
         self.remote.send('acc', {'car_x': car_x})
     def acc_stop(self, car_x):
-        self.remote.send('accelerate_car_stop', {'car_x': car_x})
+        self.remote.send('acc_car_stop', {'car_x': car_x})
 
 
     def wall_acc(self, car_x):

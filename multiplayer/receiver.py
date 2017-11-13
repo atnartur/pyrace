@@ -31,6 +31,9 @@ class Receiver:
         self.player.car.x = width + data['car_x']
         self.player.car.is_accelerated = False
 
+    def acc_car_stop(self, data):
+        pass
+
     def wall_acc(self, data):
         self.player.car.x = width + data['car_x']
         self.player.walls.is_accelerated = True

@@ -22,7 +22,6 @@ class RemotePlayer:
         self.objects.append(self.info_panel)
 
     def end(self, score):
-        screen = pygame.display.set_mode((width, height))
-        self.objects.append(Final(screen, score, offset_x=width))
+        self.objects.append(Final(score, offset_x=width))
         self.walls.stop()
         self.car.stop()

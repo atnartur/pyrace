@@ -36,7 +36,7 @@ class Player:
 
     def provider_handler(self, screen):
         if Events.instance.is_collision():
-            self.objects.append(Final(screen, self.info_panel.score))
+            self.objects.append(Final(self.info_panel.score))
             self.walls.stop()
             self.car.stop()
             Events.instance.end(self.info_panel.score)

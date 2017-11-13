@@ -1,4 +1,4 @@
-import json, socket, errno
+import json, socket, errno, time
 from settings import server_packet_size
 from app import providers
 from json.decoder import JSONDecodeError
@@ -29,9 +29,19 @@ class Remote:
     def stop():
         pass
 
+    send_throttler_times = {}
+    cmd_send_timeout = 0 # таймаут отправки команды одного типа
+
+    @staticmethod
+    def send_throttler(command):
+        check = Remote.send_throttler_times.get(command, None) == None or \
+                time.time() - Remote.send_throttler_times[command]> Remote.cmd_send_timeout
+        Remote.send_throttler_times[command] = time.time()
+        return check
+
     @staticmethod
     def send(command, data = None):
-        if Remote.instance is not None:
+        if Remote.instance is not None and Remote.send_throttler(command):
             packet = {
                 'command': command,
                 'data': data
