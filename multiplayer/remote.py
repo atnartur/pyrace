@@ -37,7 +37,7 @@ class Remote:
                 'data': data
             }
             print('socket send', packet)
-            Remote.instance.sender.sendall(json.dumps(packet).encode())
+            Remote.instance.sender.send(json.dumps(packet).encode())
 
     @staticmethod
     def receive():

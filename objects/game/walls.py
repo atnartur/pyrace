@@ -28,6 +28,7 @@ class Walls(Base):
         self.removed_walls = 0
         self.wall_generated_callback = None
         self.is_stopped = False
+        self.is_need_generate = False
         Events.last_wall = self.get_last_wall()
 
     def generate_wall(self, top_margin):
@@ -36,9 +37,10 @@ class Walls(Base):
         wall = (top_margin, width * self.cube_size, direction)
         self.coordinates.append(wall)
         if self.wall_generated_callback is not None:
-            self.wall_generated_callback(wall)
+            self.wall_generated_callback([wall])
 
     def generate(self):
+        self.is_need_generate = True
         w, h = self.size
 
         w = int(w / self.cube_size)
@@ -66,7 +68,7 @@ class Walls(Base):
         for i in range(len(self.coordinates)):
             y, width, direction = self.coordinates[i]
             self.coordinates[i] = (y + self.speed, width, direction)
-        if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin:
+        if min(self.coordinates, key=lambda x: x[0])[0] - self.top_margin >= self.margin and self.is_need_generate:
             self.generate_wall(self.top_margin)
 
         last_wall = self.get_last_wall()

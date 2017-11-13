@@ -18,6 +18,7 @@ class Events:
         self.walls = walls
         self.acceleration_coefficient = 1
         Remote.sender.wall(self.walls.coordinates)
+        self.walls.wall_generated_callback = Remote.sender.wall
         self.car.acc_stop_callback = self.accelerate_car_stop
 
     def is_collision(self):
